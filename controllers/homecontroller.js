@@ -1,3 +1,5 @@
 module.exports.home=function(req,res){
-    return res.end('works')
+    return res.render('home',{
+        title:"major project"
+    });
 }

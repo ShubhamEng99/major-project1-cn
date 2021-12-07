@@ -1,11 +1,12 @@
 const express=require('express');
 const port=8000;
-
+const path=require('path');
 const app=express();
 
 //use express router
 app.use('/',require('./routes'))
-
+app.set('view engine','ejs');
+app.set('views',path.join(__dirname,'views'))
 
 
 
