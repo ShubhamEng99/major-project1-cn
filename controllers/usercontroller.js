@@ -1,17 +1,24 @@
+const User=require('../models/user')
 module.exports.profile=function(req,res){
     return res.render('profile',{title:'user profile'})
 
 }
 
 module.exports.signup=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('profile');
+    }
     return res.render('signup',{title:'signup'})
 }
 
 module.exports.signin=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('profile');
+    }
     return res.render('signin',{title:'signin'})
 }
 
-const User=require('../models/user')
+
 module.exports.create=function(req,res){
     if(req.body.password!=req.body.confirmpassword){
         return res.redirect('back');
@@ -30,4 +37,8 @@ module.exports.create=function(req,res){
     }
     })
     
+}
+
+module.exports.creatsession=function(req,res){
+    return res.redirect('/');
 }
