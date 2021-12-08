@@ -7,4 +7,6 @@ router.use('/users',require('./users'))
 
 router.get('/',homecontroller.home)
 
+router.get('/signout',homecontroller.signout)
+
 module.exports=router;

@@ -1,5 +1,13 @@
+const User=require('../models/user')
 module.exports.profile=function(req,res){
-    return res.render('profile',{title:'user profile'})
+    User.findOne({_id:req.cookies.user_id},function(err,user){
+        if(user){
+            return res.render('profile',{title:'user profile',details:user})
+        }else{
+            return res.redirect('signin')
+        }
+    })
+   
 
 }
 
@@ -11,7 +19,7 @@ module.exports.signin=function(req,res){
     return res.render('signin',{title:'signin'})
 }
 
-const User=require('../models/user')
+
 module.exports.create=function(req,res){
     if(req.body.password!=req.body.confirmpassword){
         return res.redirect('back');
@@ -30,4 +38,18 @@ module.exports.create=function(req,res){
     }
     })
     
+}
+
+module.exports.createsession=function(req,res){
+    User.findOne({email:req.body.email},function(err,user){
+        if(user){
+           if(user.password!=req.body.password){
+               return res.redirect('back');
+           }
+           res.cookie('user_id',user._id);
+           return res.redirect('profile')
+        }else{
+            return res.redirect('back')
+        }
+    })
 }
